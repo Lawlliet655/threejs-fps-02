@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Line — a tactical FPS</title>
+<link rel="stylesheet" href="./style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.min.js" } }
+</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="view"></canvas>
+  <div id="hud" class="hidden">
+    <div id="crosshair"><i class="dot"></i><i class="t"></i><i class="b"></i><i class="l"></i><i class="r"></i></div>
+    <div id="hitmarker"><i></i><i></i><i></i><i></i></div>
+    <div id="dmg-vignette"></div>
+    <div id="topbar">
+      <span id="score-ember" class="team ember">EMBER 0</span>
+      <span id="round-timer">1:40</span>
+      <span id="score-ash" class="team ash">0 ASH</span>
+      <span id="round-label">ROUND 1</span>
+    </div>
+    <div id="killfeed"></div>
+    <div id="bl">
+      <div id="hp-row"><span class="lbl">HP</span><div class="bar"><div id="hp-fill"></div></div><span id="hp-num">100</span></div>
+      <div id="armor-row"><span class="lbl">ARMOR</span><div class="bar"><div id="armor-fill"></div></div><span id="armor-num">0</span></div>
+    </div>
+    <div id="br">
+      <div id="weapon-name">P210 Sidearm</div>
+      <div id="ammo"><span id="ammo-mag">12</span><span id="ammo-res">/ 36</span></div>
+      <div id="money-row">$<span id="money">800</span> &nbsp;·&nbsp; <span id="grenades">◉ 0</span></div>
+    </div>
+    <div id="banner" class="hidden"></div>
+    <div id="hint"></div>
+  </div>
+
+  <div id="menu-title" class="menu">
+    <div class="menu-inner">
+      <div class="kicker">MAKE.FUN · THREEJS-FPS-02</div>
+      <h1>EMBER LINE</h1>
+      <p class="tag">A tactical FPS in a dusk container yard. You and two Ember bots against four Ash bots.
+      First team to <b>5 rounds</b> takes the match. Win rounds, earn money, buy better guns.</p>
+      <div class="controls">
+        <div><b>W A S D</b> move</div><div><b>Mouse</b> aim · <b>Click</b> shoot</div>
+        <div><b>R</b> reload</div><div><b>1 / 2 / 3</b> switch weapon</div>
+        <div><b>Shift</b> aim steady</div><div><b>C</b> crouch</div>
+        <div><b>Space</b> jump</div><div><b>G</b> throw grenade</div>
+        <div><b>B</b> buy menu</div><div><b>P</b> pause · <b>M</b> sound</div>
+      </div>
+      <button id="btn-start" class="big">▶ &nbsp;DEPLOY</button>
+      <p class="fine">Headshots deal double damage. Standing still and crouching tighten your spread.
+      Armor absorbs half of incoming damage. Click DEPLOY to lock the mouse and start.</p>
+    </div>
+  </div>
+
+  <div id="menu-buy" class="menu hidden">
+    <div class="menu-inner wide">
+      <h2>BUY PHASE <span id="buy-timer">20</span>s</h2>
+      <p class="tag">Money: <b>$<span id="buy-money">800</span></b> · Click an item or press its key. Weapons are kept between rounds; dying drops your primary.</p>
+      <div id="buy-grid"></div>
+      <button id="btn-start-round" class="big">START ROUND &nbsp;(Space)</button>
+    </div>
+  </div>
+
+  <div id="menu-pause" class="menu hidden">
+    <div class="menu-inner">
+      <h2>PAUSED</h2>
+      <button id="btn-resume" class="big">RESUME</button>
+      <button id="btn-restart" class="big ghost">RESTART MATCH</button>
+    </div>
+  </div>
+
+  <div id="menu-end" class="menu hidden">
+    <div class="menu-inner">
+      <h1 id="end-title">EMBER WINS</h1>
+      <p class="tag" id="end-sub"></p>
+      <div id="end-stats"></div>
+      <button id="btn-again" class="big">↻ &nbsp;PLAY AGAIN</button>
+    </div>
+  </div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
