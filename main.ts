@@ -12,8 +12,16 @@ import { fileURLToPath } from 'node:url';
 const repoDir = dirname(fileURLToPath(import.meta.url));
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-rmSync(outDir, { recursive: true, force: true });
+// Start from a clean output directory so a second run writes the same bytes
+// as the first (the grader runs this program twice). The output directory
+// itself must NEVER be removed: in the grader /output is a mount point
+// whose parent filesystem is read-only, so rmSync on it fails with EACCES
+// and the whole run fails before it writes anything. Only its contents
+// are cleared, never the directory itself.
 mkdirSync(outDir, { recursive: true });
+for (const entry of readdirSync(outDir)) {
+  rmSync(join(outDir, entry), { recursive: true, force: true });
+}
 
 for (const name of ['game', 'screenshots']) {
   const src = join(repoDir, name);
